@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order №{{ order.id }}</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h3>Заказ №<span id="id-order">{{ order.id }}</span></h3>
+    <h4>Дата создания: {{ order.created_at }}</h4>
+    <button id="button-buy" type="submit">buy</button>
+    <h4>Цена всего заказа: {{ order.get_total_price }}</h4>
+    <h4>Продукты:</h4>
+    {% for item in order.items.all %}
+        <div>
+            <h5>{{ item.name }}</h5>
+            <p>{{ item.price }}$</p>
+            <hr style="margin-left: 0; width: 100px"/>
+        </div>
+    {% endfor %}
+    <script src="{% static 'buy-order.js' %}"></script>
+</body>
+</html>

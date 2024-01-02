@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <a href="{% url 'paymentapp:OrdersListView' %}">Заказы</a>
+    <a href="{% url 'paymentapp:DiscountsListView' %}">Скидки</a>
+    <a href="{% url 'paymentapp:TaxesListView' %}">Налоги</a>
+    <h3>Продукты</h3>
+    {% for item in items %}
+        {% if item.currency is not None %}
+            <div>
+                <a href="{% url 'paymentapp:ItemDetailView' pk=item.id %}">{{ item.name }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+    <a href="{% url 'paymentapp:ItemListView' %}">на главную</a>
+    <h3>Заказы</h3>
+    {% for order in orders %}
+        <div>
+             <a href="{% url 'paymentapp:OrderDetailView' pk=order.id %}">Заказ №{{ order.id }} от {{ order.created_at }}</a>
+        </div>
+    {% endfor %}
+</body>
+</html>

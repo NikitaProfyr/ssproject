@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    command: >
+      bash -c "
+      cd ssproject/ &&
+      python manage.py migrate &&
+      python manage.py createsuperuser --username admin --email admin@example.com --noinput &&
+      python manage.py runserver 0.0.0.0:8080
+      "
+    restart: unless-stopped
+    ports:
+      - "8000:8080"
+    environment:
+      DJANGO_SUPERUSER_PASSWORD: 123
+      POSTGRES_USER: dies_admin
+      POSTGRES_PASSWORD: 123123
+      POSTGRES_DB: postgres
+      STRIPE_SECRET_KEY: sk_test_51ORJp9JfjN5cNO65YZUCnV4F3yiM8iyIlRZdJW5GVtIyP9wsVrIyq2tfoZoc8XVSTdC4q13Y7r7f2328jDQTYqSq00yaNE3GUB
+      STRIPE_PUBLISHABLE_KEY: pk_test_51ORJp9JfjN5cNO65ZfkVtYNQ8WCW0zSXVQkuclDSgCV7uvlwKzkhapCifS2ehc6Ng9LtMyP4X57JvJlypGLEDSSi00e2tRSdSW
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres:15.3
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: dies_admin
+      POSTGRES_PASSWORD: 123123
+      POSTGRES_DB: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_data:
+

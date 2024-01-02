@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taxes</title>
+</head>
+<body>
+    <a href="{% url 'paymentapp:ItemListView' %}">на главную</a>
+
+    {% for tax in taxes %}
+        <div>
+            <h4>{{ tax.name }}</h4>
+            <p>размер {{ tax.rate }}%</p>
+            <hr style="width: 100px; margin-left: 0"/>
+        </div>
+    {% endfor %}
+</body>
+</html>
