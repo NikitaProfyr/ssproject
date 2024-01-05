@@ -9,13 +9,13 @@ services:
       cd ssproject/ &&
       python manage.py migrate &&
       python manage.py createsuperuser --username admin --email admin@example.com --noinput &&
-      python manage.py runserver 0.0.0.0:8080
+      gunicorn ssproject.wsgi:application --bind 0.0.0.0:8000
       "
     restart: unless-stopped
     ports:
       - "8000:8080"
     environment:
-      DJANGO_SUPERUSER_PASSWORD: 123
+      DJANGO_SUPERUSER_PASSWORD: 321321
       POSTGRES_USER: dies_admin
       POSTGRES_PASSWORD: 123123
       POSTGRES_DB: postgres
