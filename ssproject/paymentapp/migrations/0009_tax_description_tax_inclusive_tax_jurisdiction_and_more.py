@@ -4,30 +4,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0008_remove_discount_orders_order_discount'),
+        ("paymentapp", "0008_remove_discount_orders_order_discount"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='tax',
-            name='description',
-            field=models.TextField(default='описание', verbose_name='Описание'),
+            model_name="tax",
+            name="description",
+            field=models.TextField(default="описание", verbose_name="Описание"),
         ),
         migrations.AddField(
-            model_name='tax',
-            name='inclusive',
-            field=models.BooleanField(default=False, verbose_name='включенный или отдельный от цены'),
+            model_name="tax",
+            name="inclusive",
+            field=models.BooleanField(
+                default=False, verbose_name="включенный или отдельный от цены"
+            ),
         ),
         migrations.AddField(
-            model_name='tax',
-            name='jurisdiction',
-            field=models.TextField(default='юрисдикция', verbose_name='Юрисдикция'),
+            model_name="tax",
+            name="jurisdiction",
+            field=models.TextField(default="юрисдикция", verbose_name="Юрисдикция"),
         ),
         migrations.AlterField(
-            model_name='discount',
-            name='amount',
-            field=models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Размер скидки %'),
+            model_name="discount",
+            name="amount",
+            field=models.DecimalField(
+                decimal_places=2, max_digits=10, verbose_name="Размер скидки %"
+            ),
         ),
     ]

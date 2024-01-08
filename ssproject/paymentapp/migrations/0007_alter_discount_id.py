@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0006_alter_tax_options'),
+        ("paymentapp", "0006_alter_tax_options"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='discount',
-            name='id',
+            model_name="discount",
+            name="id",
             field=models.CharField(max_length=10, primary_key=True, serialize=False),
         ),
     ]

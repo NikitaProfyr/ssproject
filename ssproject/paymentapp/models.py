@@ -5,15 +5,15 @@ from django.db import models
 
 from ssproject.settings import STRIPE_SECRET_KEYS
 
-stripe.api_key = STRIPE_SECRET_KEYS.get('BASE')
+stripe.api_key = STRIPE_SECRET_KEYS.get("BASE")
 
 # Create your models here.
 
 
 class Currency(models.Model):
-    code = models.CharField(max_length=3, verbose_name='Трехбуквенный код')
-    name = models.CharField(max_length=12, verbose_name='Наименование')
-    country = models.CharField(max_length=100, verbose_name='Страна')
+    code = models.CharField(max_length=3, verbose_name="Трехбуквенный код")
+    name = models.CharField(max_length=12, verbose_name="Наименование")
+    country = models.CharField(max_length=100, verbose_name="Страна")
 
     def __str__(self):
         return self.code
@@ -29,7 +29,9 @@ class Item(models.Model):
     price = models.DecimalField(
         max_digits=6, decimal_places=2, default=0, verbose_name="цена продукта"
     )
-    currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True, verbose_name='Валюта')
+    currency = models.ForeignKey(
+        Currency, on_delete=models.SET_NULL, null=True, verbose_name="Валюта"
+    )
 
     def __str__(self):
         return self.name
@@ -41,18 +43,17 @@ class Item(models.Model):
 
 class Discount(models.Model):
     id = models.CharField(primary_key=True, max_length=10)
-    name = models.CharField(max_length=50, verbose_name='Наименование')
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Размер скидки %')
+    name = models.CharField(max_length=50, verbose_name="Наименование")
+    amount = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Размер скидки %"
+    )
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.id == '':
-            discount = stripe.Coupon.create(
-                name=self.name,
-                percent_off=self.amount
-            )
+        if self.id == "":
+            discount = stripe.Coupon.create(name=self.name, percent_off=self.amount)
             self.id = discount.id
         else:
             stripe.Coupon.modify(
@@ -72,23 +73,25 @@ class Discount(models.Model):
 
 class Tax(models.Model):
     id = models.CharField(primary_key=True, max_length=30)
-    name = models.CharField(max_length=50, verbose_name='Наименование')
-    description = models.TextField(default='описание', verbose_name="Описание")
-    jurisdiction = models.TextField(default='юрисдикция', verbose_name="Юрисдикция")
-    rate = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Ставка')
-    inclusive = models.BooleanField(default=False, verbose_name='включенный или отдельный от цены')
+    name = models.CharField(max_length=50, verbose_name="Наименование")
+    description = models.TextField(default="описание", verbose_name="Описание")
+    jurisdiction = models.TextField(default="юрисдикция", verbose_name="Юрисдикция")
+    rate = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Ставка")
+    inclusive = models.BooleanField(
+        default=False, verbose_name="включенный или отдельный от цены"
+    )
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk == '':
+        if self.pk == "":
             tax_rate = stripe.TaxRate.create(
                 display_name=self.name,
                 description=self.description,
                 jurisdiction=self.jurisdiction,
                 percentage=self.rate,
-                inclusive=self.inclusive
+                inclusive=self.inclusive,
             )
             self.id = tax_rate.id
         else:
@@ -110,10 +113,24 @@ class Tax(models.Model):
 
 
 class Order(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания заказа')
-    items = models.ManyToManyField(Item, related_name='items', verbose_name='Продукты')
-    discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Купон на скидку')
-    tax = models.ForeignKey(Tax, null=True, on_delete=models.CASCADE, related_name='taxes', verbose_name='Налог')
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата создания заказа"
+    )
+    items = models.ManyToManyField(Item, related_name="items", verbose_name="Продукты")
+    discount = models.ForeignKey(
+        Discount,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name="Купон на скидку",
+    )
+    tax = models.ForeignKey(
+        Tax,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="taxes",
+        verbose_name="Налог",
+    )
 
     def __str__(self):
         return f"№{self.pk} от {self.created_at}"
@@ -131,4 +148,3 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "заказы"
-

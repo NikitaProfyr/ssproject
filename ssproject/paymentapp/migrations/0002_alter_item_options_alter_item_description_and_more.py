@@ -4,24 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0001_initial'),
+        ("paymentapp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='item',
-            options={'verbose_name': 'Продукт', 'verbose_name_plural': 'Продукты'},
+            name="item",
+            options={"verbose_name": "Продукт", "verbose_name_plural": "Продукты"},
         ),
         migrations.AlterField(
-            model_name='item',
-            name='description',
-            field=models.TextField(verbose_name='Описание'),
+            model_name="item",
+            name="description",
+            field=models.TextField(verbose_name="Описание"),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='name',
-            field=models.CharField(max_length=40, verbose_name='Наименование'),
+            model_name="item",
+            name="name",
+            field=models.CharField(max_length=40, verbose_name="Наименование"),
         ),
     ]

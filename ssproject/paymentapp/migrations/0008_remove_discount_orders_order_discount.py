@@ -5,19 +5,22 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0007_alter_discount_id'),
+        ("paymentapp", "0007_alter_discount_id"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='discount',
-            name='orders',
+            model_name="discount",
+            name="orders",
         ),
         migrations.AddField(
-            model_name='order',
-            name='discount',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='paymentapp.discount'),
+            model_name="order",
+            name="discount",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="paymentapp.discount",
+            ),
         ),
     ]

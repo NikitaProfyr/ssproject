@@ -5,42 +5,63 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0004_discount'),
+        ("paymentapp", "0004_discount"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='discount',
-            options={'verbose_name': 'Скидка', 'verbose_name_plural': 'Скидки'},
+            name="discount",
+            options={"verbose_name": "Скидка", "verbose_name_plural": "Скидки"},
         ),
         migrations.AlterField(
-            model_name='discount',
-            name='amount',
-            field=models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Размер скидки'),
+            model_name="discount",
+            name="amount",
+            field=models.DecimalField(
+                decimal_places=2, max_digits=10, verbose_name="Размер скидки"
+            ),
         ),
         migrations.AlterField(
-            model_name='discount',
-            name='name',
-            field=models.CharField(max_length=50, verbose_name='Наименование'),
+            model_name="discount",
+            name="name",
+            field=models.CharField(max_length=50, verbose_name="Наименование"),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='items',
-            field=models.ManyToManyField(related_name='items', to='paymentapp.item'),
+            model_name="order",
+            name="items",
+            field=models.ManyToManyField(related_name="items", to="paymentapp.item"),
         ),
         migrations.CreateModel(
-            name='Tax',
+            name="Tax",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='Наименование')),
-                ('rate', models.DecimalField(decimal_places=2, max_digits=5, verbose_name='Ставка')),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='taxes', to='paymentapp.order')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="Наименование")),
+                (
+                    "rate",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=5, verbose_name="Ставка"
+                    ),
+                ),
+                (
+                    "order",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="taxes",
+                        to="paymentapp.order",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Налог',
-                'verbose_name_plural': 'НАлоги',
+                "verbose_name": "Налог",
+                "verbose_name_plural": "НАлоги",
             },
         ),
     ]

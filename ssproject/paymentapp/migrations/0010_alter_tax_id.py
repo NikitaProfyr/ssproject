@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('paymentapp', '0009_tax_description_tax_inclusive_tax_jurisdiction_and_more'),
+        ("paymentapp", "0009_tax_description_tax_inclusive_tax_jurisdiction_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='tax',
-            name='id',
+            model_name="tax",
+            name="id",
             field=models.CharField(max_length=30, primary_key=True, serialize=False),
         ),
     ]
